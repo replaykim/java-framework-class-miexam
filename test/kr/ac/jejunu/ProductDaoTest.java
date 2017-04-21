@@ -1,5 +1,6 @@
 package kr.ac.jejunu;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -10,14 +11,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ProductDaoTest {
 
+    DaoFactory daoFactory;
 
+    @Before
+    public void setup(){
+        daoFactory = new DaoFactory();
+    }
     @Test
     public void get() throws SQLException, ClassNotFoundException {
         Long id = 1L;
         String title = "제주감귤";
         Integer price = 15000;
 
-        ProductDao productDao = new ProductDao(new JejuConnectionMaker());
+        ProductDao productDao = daoFactory.getProductDao();
         Product product = productDao.get(id);
         assertThat(id, is(product.getId()));
         assertThat(title, is(product.getTitle()));
@@ -35,41 +41,7 @@ public class ProductDaoTest {
         product.setTitle(title);
         product.setPrice(price);
 
-        ProductDao productDao = new ProductDao(new JejuConnectionMaker());
-        productDao.add(product);
-
-        Product resultProduct = productDao.get(id);
-
-        assertThat(id, is(resultProduct.getId()));
-        assertThat(title, is(resultProduct.getTitle()));
-        assertThat(price, is(resultProduct.getPrice()));
-    }
-
-    @Test
-    public void hallaGet() throws SQLException, ClassNotFoundException {
-        Long id = 1L;
-        String title = "제주감귤";
-        Integer price = 15000;
-
-        ProductDao productDao = new ProductDao(new HallaConnectionMaker());
-        Product product = productDao.get(id);
-        assertThat(id, is(product.getId()));
-        assertThat(title, is(product.getTitle()));
-        assertThat(price, is(product.getPrice()));
-    }
-
-    @Test
-    public void hallaAdd() throws SQLException, ClassNotFoundException {
-        Long id  =   Long.valueOf(new Random().nextInt(3000)) ;
-        String title  = "김재현";
-        Integer price = 123456;
-
-        Product product = new Product();
-        product.setId(id);
-        product.setTitle(title);
-        product.setPrice(price);
-
-        ProductDao productDao = new ProductDao(new HallaConnectionMaker());
+        ProductDao productDao = daoFactory.getProductDao();
         productDao.add(product);
 
         Product resultProduct = productDao.get(id);
