@@ -14,8 +14,8 @@ public class ProductDao {
         try {
             connection = dataSource.getConnection();
 
-            preparedStatement = connection.prepareStatement("select * from product where id = ?");
-            preparedStatement.setLong(1, id);
+            StatementStrategy statementStrategy = new GetProductStatementStrategy();
+            preparedStatement = statementStrategy.makeStatement(connection, id);
 
             resultSet = preparedStatement.executeQuery();
 
@@ -60,10 +60,9 @@ public class ProductDao {
         try {
             connection = dataSource.getConnection();
 
-            preparedStatement = connection.prepareStatement("INSERT INTO product VALUES (?,?,?)");
-            preparedStatement.setLong(1, product.getId());
-            preparedStatement.setString(2, product.getTitle());
-            preparedStatement.setInt(3, product.getPrice());
+            StatementStrategy statementStrategy = new AddProductStatementStrategy();
+            preparedStatement = statementStrategy.makeStatement(connection, product);
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,8 +92,8 @@ public class ProductDao {
         try {
             connection = dataSource.getConnection();
 
-            preparedStatement = connection.prepareStatement("DELETE FROM product WHERE id = ?");
-            preparedStatement.setLong(1, id);
+            StatementStrategy statementStrategy = new DeleteProductStatementStrategy();
+            preparedStatement = statementStrategy.makeStatement(connection, id);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -124,10 +123,8 @@ public class ProductDao {
         try {
             connection = dataSource.getConnection();
 
-            preparedStatement = connection.prepareStatement("update product set title = ?, price = ? where id = ?");
-            preparedStatement.setString(1, product.getTitle());
-            preparedStatement.setInt(2, product.getPrice());
-            preparedStatement.setLong(3, product.getId());
+            StatementStrategy statementStrategy = new UpdateProductStatementStrategy();
+            preparedStatement = statementStrategy.makeStatement(connection, product);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
