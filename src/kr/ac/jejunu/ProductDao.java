@@ -5,10 +5,6 @@ import java.sql.*;
 public class ProductDao {
     ConnectionMaker connectionMaker;
 
-    public ProductDao(ConnectionMaker connectionMaker) {
-        this.connectionMaker = connectionMaker;
-    }
-
     public Product get(Long id) throws ClassNotFoundException, SQLException {
         Connection connection = connectionMaker.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("select * from product where id = ?");
@@ -36,5 +32,9 @@ public class ProductDao {
 
         preparedStatement.close();
         connection.close();
+    }
+
+    public void setConnectionMaker(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 }
