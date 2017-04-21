@@ -33,7 +33,7 @@ public class ProductDaoTest {
 
     @Test
     public void add() throws SQLException, ClassNotFoundException {
-        Long id  =   Long.valueOf(new Random().nextInt(3000)) ;
+        Long id  =   Long.valueOf(new Random().nextInt(30000)) ;
         String title  = "김재현";
         Integer price = 123456;
 
@@ -53,7 +53,7 @@ public class ProductDaoTest {
 
     @Test
     public void delete() throws SQLException, ClassNotFoundException {
-        Long id  =   Long.valueOf(new Random().nextInt(3000)) ;
+        Long id  =   Long.valueOf(new Random().nextInt(30000)) ;
         String title  = "삭제용";
         Integer price = 123456;
 
@@ -72,7 +72,7 @@ public class ProductDaoTest {
 
     @Test
     public void update() throws SQLException, ClassNotFoundException {
-        Long id  =   Long.valueOf(new Random().nextInt(3000)) ;
+        Long id  =   Long.valueOf(new Random().nextInt(30000)) ;
         String title  = "수정용";
         Integer price = 123456;
 
