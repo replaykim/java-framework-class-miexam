@@ -8,9 +8,14 @@ import java.sql.SQLException;
  * Created by replay on 2017. 4. 21..
  */
 public class AddProductStatementStrategy implements StatementStrategy {
+    Product product;
+
+    public AddProductStatementStrategy(Product product) {
+        this.product = product;
+    }
+
     @Override
-    public PreparedStatement makeStatement(Connection connection, Object object) throws SQLException {
-        Product product = (Product) object;
+    public PreparedStatement makeStatement(Connection connection) throws SQLException {
         PreparedStatement preparedStatement;
         preparedStatement = connection.prepareStatement("INSERT INTO product VALUES (?,?,?)");
         preparedStatement.setLong(1, product.getId());
