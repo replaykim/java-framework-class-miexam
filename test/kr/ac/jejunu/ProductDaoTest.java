@@ -9,13 +9,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ProductDaoTest {
+
+
     @Test
     public void get() throws SQLException, ClassNotFoundException {
         Long id = 1L;
         String title = "제주감귤";
         Integer price = 15000;
 
-        ProductDao productDao = new JejuProductDao();
+        ProductDao productDao = new ProductDao(new JejuConnectionMaker());
         Product product = productDao.get(id);
         assertThat(id, is(product.getId()));
         assertThat(title, is(product.getTitle()));
@@ -33,7 +35,7 @@ public class ProductDaoTest {
         product.setTitle(title);
         product.setPrice(price);
 
-        ProductDao productDao = new JejuProductDao();
+        ProductDao productDao = new ProductDao(new JejuConnectionMaker());
         productDao.add(product);
 
         Product resultProduct = productDao.get(id);
@@ -49,7 +51,7 @@ public class ProductDaoTest {
         String title = "제주감귤";
         Integer price = 15000;
 
-        ProductDao productDao = new HallaProductDao();
+        ProductDao productDao = new ProductDao(new HallaConnectionMaker());
         Product product = productDao.get(id);
         assertThat(id, is(product.getId()));
         assertThat(title, is(product.getTitle()));
@@ -67,7 +69,7 @@ public class ProductDaoTest {
         product.setTitle(title);
         product.setPrice(price);
 
-        ProductDao productDao = new HallaProductDao();
+        ProductDao productDao = new ProductDao(new HallaConnectionMaker());
         productDao.add(product);
 
         Product resultProduct = productDao.get(id);
